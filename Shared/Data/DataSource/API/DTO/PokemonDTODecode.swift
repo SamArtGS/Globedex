@@ -101,15 +101,15 @@ extension PokemonDTO.Sprite: Decodable {
     }
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backDefault = try container.decode(String.self, forKey: .backDefault)
-        backFemale = try container.decode(String.self, forKey: .backFemale)
-        backShiny = try container.decode(String.self, forKey: .backShiny)
-        backShinyFemale = try container.decode(String.self, forKey: .backShinyFemale)
-        frontDefault = try container.decode(String.self, forKey: .frontDefault)
-        frontFemale = try container.decode(String.self, forKey: .frontFemale)
-        frontShiny = try container.decode(String.self, forKey: .frontShiny)
-        frontShinyFemale = try container.decode(String.self, forKey: .frontShinyFemale)
-        other = try container.decode(OtherSprites.self, forKey: .other)
+        backDefault = try container.decodeIfPresent(String.self, forKey: .backDefault)
+        backFemale = try container.decodeIfPresent(String.self, forKey: .backFemale)
+        backShiny = try container.decodeIfPresent(String.self, forKey: .backShiny)
+        backShinyFemale = try container.decodeIfPresent(String.self, forKey: .backShinyFemale)
+        frontDefault = try container.decodeIfPresent(String.self, forKey: .frontDefault)
+        frontFemale = try container.decodeIfPresent(String.self, forKey: .frontFemale)
+        frontShiny = try container.decodeIfPresent(String.self, forKey: .frontShiny)
+        frontShinyFemale = try container.decodeIfPresent(String.self, forKey: .frontShinyFemale)
+        other = try container.decodeIfPresent(OtherSprites.self, forKey: .other)
     }
 }
 

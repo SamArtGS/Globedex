@@ -17,7 +17,7 @@ struct Pokemon: Identifiable {
     let height: Float
     let abilities: [String]
     let moves: [String]
-    let stadistics: PokemonStadistic
+    let stadistics: Stadistic
     let imageName: String?
 
     var weakness: [PokemonType] {
@@ -35,13 +35,14 @@ struct Pokemon: Identifiable {
     var normalDamage: [PokemonType] {
         type.flatMap { $0.notVeryEfective }
     }
+    
+    struct Stadistic {
+        var hp: Float = .zero
+        var attack: Float = .zero
+        var defense: Float = .zero
+        var specialAttack: Float = .zero
+        var specialDefense: Float = .zero
+        var speed: Float = .zero
+    }
 }
 
-struct PokemonStadistic {
-    let hp: Float
-    let attack: Float
-    let defense: Float
-    let specialAttack: Float
-    let specialDefense: Float
-    let speed: Float
-}

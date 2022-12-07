@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Constant {
+    static let progressVarTitles: [String] = ["HP", "AT", "DF", "SA", "SD", "SP"]
+}
