@@ -1,0 +1,2 @@
+# Globedex
+Pokedex cross device.
