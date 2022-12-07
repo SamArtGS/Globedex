@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct CircularProgressBarView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    @Binding var value: Float
+    @Binding var maxValue: Float
+    @Binding var textGraph: String
+    
+    
+    init(value: Binding<Float>, maxValue: Binding<Float>  = .constant(150), textGraph: Binding<String>) {
+        self._value = value
+        self._maxValue = maxValue
+        self._textGraph = textGraph
     }
-}
-
-struct CircularProgressBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CircularProgressBarView()
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 3)
+                .opacity(0.3)
+                .foregroundColor(.white)
+            Circle()
+                .trim(from: 0.0, to: CGFloat(min(self.value/self.maxValue, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.white)
+                .rotationEffect(Angle(degrees: 270.0))
+            Text(textGraph)
+                .font(.system(size: 10, weight: .medium, design: .rounded))
+        }
     }
 }
