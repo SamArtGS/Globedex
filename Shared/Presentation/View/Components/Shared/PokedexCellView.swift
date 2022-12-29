@@ -9,112 +9,65 @@ import SwiftUI
 
 struct PokedexCellView: View {
     
-    @Binding var sizeContainer: CGSize
-    @State private var progressRotation: Double = 0.0
     @ObservedObject var viewModel: PokemonCellViewModel
+    @Binding var weakStrongToggle: Int
 
     var body: some View {
-        ZStack(alignment: .leading) {
-          Image("kanto")
-            .resizable()
-            .blur(radius: 10)
-            .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                  .stroke(.gray, lineWidth: 1)
-            )
-            .padding(1)
-            VStack(alignment: .leading) {
-              HStack(alignment: .center, spacing: 0) {
-                VStack(alignment: .leading){
-                  HStack(alignment: .center, spacing: 5) {
-                    ZStack(alignment: .center){
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .frame(width: 20, height: 20, alignment: .center)
-                            .foregroundColor(.white)
-                        Image(systemName: viewModel.pokemonTypeIcons.first ?? "ellipsis")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 12, height: 12, alignment: .center)
-                            .foregroundColor(.blue)
-                    }
-                    Text(viewModel.pokemonNameLabel)
-                      .font(.system(size: 12, weight: .bold, design: .serif))
-                      .foregroundColor(.black)
-                  }
-                  .padding(.leading, 5)
-                  AsyncImage(
-                    url: URL(string: viewModel.pokemonImageLink ?? ""),
-                    content: { image in
-                      image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    }, placeholder: {
-                        Image("icons8-fight_pokemon")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .rotationEffect(.degrees(progressRotation))
-                        .onAppear {
-                            withAnimation(.linear(duration: 1).repeatForever(autoreverses: false).speed(2)) {
-                                progressRotation = 360.0
-                            }
-                        }
-                    }
-                  )
-                  Spacer()
-                }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 3) {
-                  ZStack {
-                      Circle()
-                          .frame(width: 35, height: 35, alignment: .center)
-                          .foregroundColor(.white)
-                      Image(viewModel.heartIcon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 28, height: 28, alignment: .center)
-                        .foregroundColor(.red)
-                  }
-                  Text(viewModel.pokemonNumberLabel)
-                    .foregroundColor(.black)
-                    .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                  Spacer()
-                  Text("Weak")
-                    .foregroundColor(.black)
-                    .font(.system(size: 10, weight: .semibold, design: .default))
-                    PokemonTypeStackView(pokemonTypeIcons: $viewModel.weakStrongStringsIcons)
-                  Spacer()
-                }
-                .padding([.top,.trailing], 3)
-                }
-                HStack(alignment: .center) {
-                    Spacer()
-                    ForEach(Constant.progressVarTitles, id: \.self) { title in
-                        CircularProgressBarView(
-                            value: $viewModel.pokemonStadistics.hp,
-                            textGraph: .constant(title)
-                        )
-                        .frame(width: 18, height: 18, alignment: .leading)
-                    }
-                    Spacer()
-                }
+        VStack(alignment: .leading) {
+          HStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .leading){
+              setIconAndName(type: viewModel.pokemonTypeIcon.first ?? .normal, name: viewModel.pokemonNameLabel)
+              PokemonAsyncImage(imageLink: viewModel.pokemonImageLink)
             }
-            .padding(.all, 5)
-        }
-        .frame(width: sizeContainer.width, height: sizeContainer.height, alignment: .center)
-    }
-}
 
-struct PokemonCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PokedexCellView(sizeContainer: .constant(
-                CGSize(
-                    width: 180,
-                    height: 200
-                )
-            ),
-            viewModel: PokemonCellViewModel(number: 1))
+            Spacer()
+            
+            VStack(alignment: .trailing, spacing: 3) {
+              PokeballCatchedIcon()
+              Text(viewModel.pokemonNumberLabel)
+                .foregroundColor(.black)
+                .font(.system(size: 12, weight: .semibold, design: .monospaced))
+              Spacer()
+              Text(weakStrongToggle == 0 ? "Strong" : "Weak")
+                .foregroundColor(.black)
+                .font(.system(size: 10, weight: .semibold, design: .default))
+              PokemonTypeStackView(pokemonTypeIcons: $viewModel.weakStrongIcons)
+            }
+            .padding([.top,.trailing], 3)
+          }
+          PokemonStatsGraphsView(stadistics: $viewModel.pokemonStadistics)
+        }
+        .padding(.all, 5)
+        .addBackgroundImage(with: "kanto", and: 10)
+    }
+    
+    private func setIconAndName(type: PokemonType, name: String) -> some View {
+      HStack(alignment: .center, spacing: 5) {
+        
+        ZStack(alignment: .center) {
+          RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .frame(width: 20, height: 20, alignment: .center)
+            .foregroundColor(.white)
+          PokemonIconView(pokemonType: type)
+            .frame(width: 12, height: 12, alignment: .center)
+        }
+        
+        Text(name)
+          .font(.system(size: 12, weight: .bold, design: .serif))
+          .foregroundColor(.black)
+        }
+    }
+    
+    private func PokeballCatchedIcon() -> some View {
+        ZStack {
+          Circle()
+            .frame(width: 35, height: 35, alignment: .center)
+            .foregroundColor(.white)
+          Image(viewModel.heartIcon)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 28, height: 28, alignment: .center)
+            .foregroundColor(.red)
         }
     }
 }

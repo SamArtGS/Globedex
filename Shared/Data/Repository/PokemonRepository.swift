@@ -22,7 +22,7 @@ enum PokemonFetchErrors: Error {
 }
 
 protocol PokemonRepository {
-    func getPokemon(by value: String) -> AnyPublisher<Pokemon, Error>
+    func getPokemon(by value: String) -> AnyPublisher<[Pokemon], Error>
 }
 
 class DefaultPokemonRepository: PokemonRepository {
@@ -37,7 +37,7 @@ class DefaultPokemonRepository: PokemonRepository {
         self.remoteRepository = remoteRepository
     }
     
-    func getPokemon(by value: String) -> AnyPublisher<Pokemon, Error> {
+    func getPokemon(by value: String) -> AnyPublisher<[Pokemon], Error> {
         remoteRepository.getPokemon(with: value)
     }
 }

@@ -189,45 +189,4 @@ enum PokemonType: String, CaseIterable {
             return [.poison, .steel]
         }
     }
-    
-    static func getImageName(from type: Self) -> String {
-        switch type {
-        case .normal:
-            return "hand.thumbsup.fill"
-        case .fighting:
-            return "figure.boxing"
-        case .flying:
-            return "tornado"
-        case .poison:
-            return "testtube.2"
-        case .ground:
-            return "seal.fill"
-        case .rock:
-            return "mountain.2.fill"
-        case .bug:
-            return "ladybug.fill"
-        case .ghost:
-            return "theatermasks.fill"
-        case .steel:
-            return "scalemass.fill"
-        case .fire:
-            return "flame.fill"
-        case .water:
-            return "drop.fill"
-        case .grass:
-            return "camera.macro"
-        case .electric:
-            return "bolt.fill"
-        case .psychic:
-            return "brain.head.profile"
-        case .ice:
-            return "snowflake"
-        case .dragon:
-            return "lizard.fill"
-        case .dark:
-            return "moon.fill"
-        case .fairy:
-            return "sparkles"
-        }
-    }
 }

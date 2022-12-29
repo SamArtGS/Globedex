@@ -12,5 +12,5 @@ protocol GetPokemonUseCase {
     associatedtype Query: Equatable
     var repository: PokemonRepository { get }
     init(repository: PokemonRepository)
-    func execute(with: Query) -> AnyPublisher<Pokemon, Error>
+    func execute(with: Query) -> AnyPublisher<[Pokemon], Error>
 }

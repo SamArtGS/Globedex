@@ -16,7 +16,7 @@ class DefaultGetPokemonUseCase<Value: Hashable>: GetPokemonUseCase {
         self.repository = repository
     }
 
-    func execute(with value: Value) -> AnyPublisher<Pokemon, Error> {
+    func execute(with value: Value) -> AnyPublisher<[Pokemon], Error> {
         repository.getPokemon(by:"\(value)")
     }
 }

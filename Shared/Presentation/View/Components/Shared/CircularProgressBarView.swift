@@ -11,14 +11,13 @@ struct CircularProgressBarView: View {
     @Binding var value: Float
     @Binding var maxValue: Float
     @Binding var textGraph: String
-    
-    
+
     init(value: Binding<Float>, maxValue: Binding<Float>  = .constant(150), textGraph: Binding<String>) {
         self._value = value
         self._maxValue = maxValue
         self._textGraph = textGraph
     }
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -32,6 +31,7 @@ struct CircularProgressBarView: View {
                 .rotationEffect(Angle(degrees: 270.0))
             Text(textGraph)
                 .font(.system(size: 10, weight: .medium, design: .rounded))
+                .foregroundColor(.white)
         }
     }
 }

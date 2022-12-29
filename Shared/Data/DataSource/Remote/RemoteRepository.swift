@@ -12,7 +12,7 @@ class RemoteRepository {
 
     let baseURL: String = "https://pokeapi.co/api/v2/pokemon"
 
-    func getPokemon(with name: String) -> AnyPublisher<Pokemon, Error> {
+    func getPokemon(with name: String) -> AnyPublisher<[Pokemon], Error> {
         guard let url = URL(string: baseURL)?.appendingPathComponent(name) else {
             return Fail(error: PokemonAPIError.urlError).eraseToAnyPublisher()
         }
@@ -27,7 +27,7 @@ class RemoteRepository {
         return dataTask
     }
 
-    private func mappingPokemonDTO(pokemonDTO: PokemonDTO) -> Pokemon {
+    private func mappingPokemonDTO(pokemonDTO: PokemonDTO) -> [Pokemon] {
         let typesString: [String] = pokemonDTO.types.map(\.type.name)
         let typesEnum: [PokemonType] = PokemonType.allCases.filter { typesString.contains($0.rawValue) }
         let abilities: [String] = pokemonDTO.abilities.map(\.ability.name)
@@ -42,7 +42,7 @@ class RemoteRepository {
         )
         let image: String? = pokemonDTO.sprites.other?.officialArtWork?.frontDefault
         
-        return .init(
+        return .init(arrayLiteral: .init(
             id: .init(),
             number: pokemonDTO.id,
             name: pokemonDTO.name,
@@ -54,6 +54,6 @@ class RemoteRepository {
             moves: moves,
             stadistics: stadistic,
             imageName: image
-        )
+        ))
     }
 }
