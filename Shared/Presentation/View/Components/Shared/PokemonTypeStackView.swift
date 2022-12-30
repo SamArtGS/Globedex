@@ -50,7 +50,7 @@ struct PokemonIconView: View {
             .foregroundColor(determinateColor(of: pokemonType))
     }
     
-    func determinateColor(of pokemonType: PokemonType) -> Color {
+    private func determinateColor(of pokemonType: PokemonType) -> Color {
         switch pokemonType {
         case .normal:
             return .gray
@@ -91,7 +91,7 @@ struct PokemonIconView: View {
         }
     }
     
-    func determinateImage(of type: PokemonType) -> String {
+    private func determinateImage(of type: PokemonType) -> String {
         switch type {
         case .normal:
             return "hand.thumbsup.fill"
@@ -124,7 +124,7 @@ struct PokemonIconView: View {
         case .ice:
             return "snowflake"
         case .dragon:
-            return "lizard.fill"
+            return "airplane"
         case .dark:
             return "moon.fill"
         case .fairy:

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct PokedexView: View {
     
@@ -51,6 +52,7 @@ struct PokedexView: View {
                 viewModel: PokemonCellViewModel(pokemon: viewModel.pokemons.first),
                 weakStrongToggle: $weakStrongToggle
             )
+            .frame(width: 200, height: 200, alignment: .center)
         )
       }
     }

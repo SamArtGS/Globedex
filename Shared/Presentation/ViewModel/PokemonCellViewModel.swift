@@ -46,6 +46,7 @@ final class PokemonCellViewModel: ObservableObject {
                 print("Error \(error)")
             }
         } receiveValue: { pokemon in
+            self.pokemon = pokemon.first
             self.setContent(from: pokemon.first)
         }
         .store(in: &cancellables)
@@ -59,7 +60,7 @@ final class PokemonCellViewModel: ObservableObject {
         guard let pokemon = pokemon else { return }
 
         pokemonTypeIcon = pokemon.type
-        pokemonNumberLabel = String(format: "#%03d", pokemon.number);
+        pokemonNumberLabel = String(format: "#%03d", pokemon.number)
         heartIcon = pokemonTypeIcon.count.isMultiple(of: 2) ? "pokeball-missing" : ["icons8-pokeball", "icons8-superball", "icons8-mega_ball", "icons8-ultra_ball"].randomElement() as! String
         pokemonNameLabel = pokemon.name.capitalized
         

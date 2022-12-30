@@ -17,7 +17,7 @@ struct Pokemon: Identifiable {
     let height: Float
     let abilities: [String]
     let moves: [String]
-    let stadistics: Stadistic
+    var stadistics: Stadistic
     let imageName: String?
 
     var weakness: [PokemonType] {

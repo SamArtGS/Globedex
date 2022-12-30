@@ -35,11 +35,13 @@ struct RoundedBackgroundImage: ViewModifier {
 
 struct LabelWithImage: ViewModifier {
     var image: () -> Image
+    var size: CGFloat
     func body(content: Content) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 5) {
             image()
                 .resizable()
-                .frame(width: 12, height: 12, alignment: .center)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: size)
             content
         }
     }
@@ -50,7 +52,7 @@ extension View {
     func addBackgroundImage(with name: String, and radius: Int) -> some View {
         modifier(RoundedBackgroundImage(imageName: name, cornerRadius: CGFloat(radius)))
     }
-    func icon(content: @escaping () -> Image) -> some View {
-        modifier(LabelWithImage(image: content))
+    func icon(size: CGFloat = 12, content: @escaping () -> Image) -> some View {
+        modifier(LabelWithImage(image: content, size: size))
     }
 }

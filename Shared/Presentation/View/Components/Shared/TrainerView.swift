@@ -8,26 +8,47 @@
 import SwiftUI
 
 struct TrainerView: View {
+
+    @State private var downloadAmount = 100.0
+
     var body: some View {
         ScrollView(showsIndicators: false){
           LazyVStack(alignment: .leading, spacing: 10) {
               ZStack(alignment: .bottomLeading) {
                     Image("kanto")
                       .resizable()
-                      .frame(height: 160)
+                      .frame(height: 300)
                     HStack {
                         Circle()
                             .frame(width: 100, height: 100, alignment: .center)
-                        VStack {
-                            Text("Samuel")
-                            Text("Level 1")
+                        VStack(alignment: .leading) {
+                            Text("Samuel Garrido")
+                                .font(.system(size: 24, weight: .heavy, design: .rounded))
+                                .foregroundColor(.white)
+                            Text("Blanche")
+                                .icon{
+                                    Image(systemName: "circle.fill")
+                                }
+                                .font(.system(size: 14, weight: .bold, design: .default))
+                                .foregroundColor(.white)
+                            ProgressView(value: downloadAmount, total: 100) {
+                                Text("Nivel 21")
+                                    .font(.system(size: 18, weight: .heavy, design: .monospaced))
+                                .foregroundColor(.white)
+                                .icon {
+                                    Image(systemName: "star.fill")
+                                }
+                            }
                         }
-                        Spacer()
                         VStack(alignment: .trailing){
-                          Image(systemName: "star")
+                          Image(systemName: "square.and.arrow.up")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20)
+                                .foregroundColor(.white)
                         }
                     }
-                    .padding([.leading, .bottom], 8)
+                    .padding([.leading, .bottom, .trailing], 15)
                 }
                 Text("Insignias")
                   .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -52,12 +73,14 @@ struct TrainerView: View {
                 Spacer()
             }
         }
-        .edgesIgnoringSafeArea(.vertical)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 
 struct TrainerView_Previews: PreviewProvider {
     static var previews: some View {
-        TrainerView()
+        Group {
+            TrainerView()
+        }
     }
 }

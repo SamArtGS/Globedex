@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import CoreData
-import Combine
 
 struct ContentView: View {
-
     var body: some View {
       #if os(iOS)
         switch UIDevice.current.userInterfaceIdiom {
@@ -25,12 +22,5 @@ struct ContentView: View {
       #if os(macOS)
         SidebarView()
       #endif
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

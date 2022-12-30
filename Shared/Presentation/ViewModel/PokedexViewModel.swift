@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class PokedexViewModel: ObservableObject {
+final class PokedexViewModel: ObservableObject {
     
     @Published var queryName: String = ""
     @Published private(set) var pokemons: [Pokemon] = []
@@ -17,13 +17,13 @@ class PokedexViewModel: ObservableObject {
     
     init() {
         $queryName
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .map {
-                self.useCase.execute(with: $0.lowercased())
-                .replaceError(with: [])
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$pokemons)
+          .debounce(for: 0.5, scheduler: DispatchQueue.main)
+          .map {
+            self.useCase.execute(with: $0.lowercased())
+            .replaceError(with: [])
+          }
+          .switchToLatest()
+          .receive(on: DispatchQueue.main)
+          .assign(to: &$pokemons)
     }
 }
